@@ -473,7 +473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8d2c6809452ac943bcd6a74b473c564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy: {fileID: 5070677476553690215, guid: e7342b6c7dfd39e42ab057b3dd4263bc, type: 3}
+  _enemy: {fileID: -1027447728810054985, guid: e7342b6c7dfd39e42ab057b3dd4263bc, type: 3}
   _spots:
   - {fileID: 412832023}
   - {fileID: 1186346644}
