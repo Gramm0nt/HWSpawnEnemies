@@ -3,25 +3,43 @@ using UnityEngine;
 
 public class EnemiesCreater : MonoBehaviour
 {
-    [SerializeField] public GameObject Enemy;
-    [SerializeField] public GameObject[] Spots;
+    [SerializeField] private GameObject _enemy;
+    [SerializeField] private GameObject[] _spots;
 
+    private Coroutine _spawningEnemies;
     private float _delay = 2f;
+    private float _timer = 2f;
 
     private void Start()
     {
-        StartCoroutine(CreateOneEnemy());
+        StartCoroutine(EnemiesSpawnTimer());
     }
 
-    private IEnumerator CreateOneEnemy()
+    private IEnumerator SpawningEnemies()
+    {
+        GameObject newEnemy =
+            Instantiate(_enemy, _spots[Random.Range(0, _spots.Length)].transform.position, Quaternion.identity);
+        yield return null;
+    }
+
+    private IEnumerator EnemiesSpawnTimer()
     {
         while (true)
         {
-            yield return new WaitForSeconds(_delay);
-            Transform spotTransform = Spots[Random.Range(0, Spots.Length)].GetComponent<Transform>();
-            GameObject newEnemy = Instantiate(Enemy, new Vector3(), Quaternion.identity);
-            Transform newEnemyTransform = newEnemy.GetComponent<Transform>();
-            newEnemyTransform.position = spotTransform.position;
+            _timer -= Time.deltaTime;
+
+            if (_timer <= 0)
+            {
+                if (_spawningEnemies != null)
+                {
+                    StopCoroutine(_spawningEnemies);
+                }
+
+                _spawningEnemies = StartCoroutine(SpawningEnemies());
+                _timer = _delay;
+            }
+
+            yield return null;
         }
     }
 }
